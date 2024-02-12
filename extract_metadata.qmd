@@ -1,0 +1,34 @@
+---
+title: "Demonstrating Metadata Extraction for DataCite and Dublin Core"
+format: html
+---
+
+# Working with Dublin Core Metadata
+
+The eurostat package has an internal function to to extract Dublin core 
+
+```{r}
+# Required libraries
+#library(eurostat)
+devtools::load_all()
+# Fetch the dataset here using get_eurostat_sdmx function
+dataset <- get_eurostat_sdmx(id = "cult_emp_sex")
+
+```
+
+The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. The fetched data 
+```{r}
+
+# Call the function with a hypothetical agency and ID
+metadata <- attr(dataset, "metadata")
+
+# Ensure you replace the agency and id with actual values or examples relevant to your context
+```
+
+```{r}
+metadata
+
+
+
+```
+
