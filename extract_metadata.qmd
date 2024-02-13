@@ -24,7 +24,39 @@ The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. T
 
 ```{r}
 library(dataset)
-as_datacite(metadata, "list")
+datacite_object <- datacite(
+Title = metadata$Name_FR,
+Creator = metadata$AgencyID,
+Publisher = metadata$AgencyID,
+PublicationYear = metadata$UpdateDataTimestamp,
+Geolocation = metadata$IsFinal,
+Language = metadata$URN
+)
+print(datacite_object, "Bibtex")
+```
+
+```{r}
+as_datacite(datacite_object, "list")
+```
+metadata <- list(
+    Name_EN = name_en,
+    Name_DE = name_de,
+    Name_FR = name_fr,
+    DOI_URL = doi_url,
+    DataflowID = dataflow_id,
+    AgencyID = agencyID,
+    OldestPeriodTimestamp = oldest_period_timestamp,
+    LatestPeriodTimestamp = latest_period_timestamp,
+    UpdateDataTimestamp = update_data_timestamp,
+    URN = urn,
+    Version = version,
+    IsFinal = isFinal
+   
+  )
+
+```{r}
+library(dataset)
+as_datacite(metadata,"list")
 # Ensure you replace the agency and id with actual values or examples relevant to your context
 ```
 
