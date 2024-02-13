@@ -1,42 +1,37 @@
 ---
-title: "Demonstrating Metadata Extraction for DataCite"
+title: "Demonstrating Metadata Extraction for DataCite and Dublin Core"
 format: html
+execute:
+  warning: false
 ---
 
 # Working with Datacite Metadata
 
-DataCite is an international organization that provides persistent identifiers 
-(DOIs) for research data and other research outputs. Their metadata handling 
-process is crucial for ensuring the discoverability, accessibility, and 
-reusability of research outputs. DataCite's metadata schema is designed to 
-capture essential information about research outputs, including titles, creators, 
-publication year, and resource type, among others. This comprehensive metadata 
-framework facilitates the accurate and consistent description of data, making 
-it easier for researchers, institutions, and funders to manage and track the 
-impact of their research outputs. By standardizing metadata across various 
-disciplines and repositories, DataCite plays a pivotal role in enhancing the 
-interoperability of research data, supporting open science initiatives, and 
-promoting data citation and reuse.
+DataCite is an international organization that provides persistent identifiers (DOIs) for research data and other research outputs. Their metadata handling process is crucial for ensuring the discoverability, accessibility, and reusability of research outputs. DataCite's metadata schema is designed to capture essential information about research outputs, including titles, creators, publication year, and resource type, among others. This comprehensive metadata framework facilitates the accurate and consistent description of data, making it easier for researchers, institutions, and funders to manage and track the impact of their research outputs. By standardizing metadata across various disciplines and repositories, DataCite plays a pivotal role in enhancing the interoperability of research data, supporting open science initiatives, and promoting data citation and reuse.
 
 
 ```{r}
 # Required libraries
 #library(eurostat)
+#library(dataset)
 devtools::load_all()
 # Fetch the dataset here using get_eurostat_sdmx function
-dataset <- get_eurostat_sdmx(id = "cult_emp_sex")
-
+metadata <- extract_metadata(id = "cult_emp_sex")
+metadata
 ```
 
 The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. The fetched data includes metadata and  can be accessed using `attr()` function as below.
 
 ```{r}
-
-# Assigning the 
-metadata <- attr(dataset, "metadata")
-metadata
+library(dataset)
+as_datacite(metadata, "list")
 # Ensure you replace the agency and id with actual values or examples relevant to your context
 ```
 
+```{r}
+library(dataset)
+as_dublincore(metadata, "list")
+# Ensure you replace the agency and id with actual values or examples relevant to your context
+```
 
 
