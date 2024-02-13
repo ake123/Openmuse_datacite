@@ -1,11 +1,12 @@
 ---
-title: "Demonstrating Metadata Extraction for DataCite and Dublin Core"
+title: "Demonstrating Metadata Extraction for DataCite"
 format: html
 ---
 
-# Working with Dublin Core Metadata
+# Working with Datacite Metadata
 
-The eurostat package has an internal function to to extract Dublin core 
+DataCite is an international organization that provides persistent identifiers (DOIs) for research data and other research outputs. Their metadata handling process is crucial for ensuring the discoverability, accessibility, and reusability of research outputs. DataCite's metadata schema is designed to capture essential information about research outputs, including titles, creators, publication year, and resource type, among others. This comprehensive metadata framework facilitates the accurate and consistent description of data, making it easier for researchers, institutions, and funders to manage and track the impact of their research outputs. By standardizing metadata across various disciplines and repositories, DataCite plays a pivotal role in enhancing the interoperability of research data, supporting open science initiatives, and promoting data citation and reuse.
+
 
 ```{r}
 # Required libraries
@@ -16,19 +17,15 @@ dataset <- get_eurostat_sdmx(id = "cult_emp_sex")
 
 ```
 
-The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. The fetched data 
+The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. The fetched data includes metadata and  can be accessed using `attr()` function as below.
+
 ```{r}
 
-# Call the function with a hypothetical agency and ID
+# Assigning the 
 metadata <- attr(dataset, "metadata")
-
+metadata
 # Ensure you replace the agency and id with actual values or examples relevant to your context
 ```
 
-```{r}
-metadata
 
-
-
-```
 
