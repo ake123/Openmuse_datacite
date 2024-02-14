@@ -7,7 +7,19 @@ execute:
 
 # Working with Datacite Metadata
 
-DataCite is an international organization that provides persistent identifiers (DOIs) for research data and other research outputs. Their metadata handling process is crucial for ensuring the discoverability, accessibility, and reusability of research outputs. DataCite's metadata schema is designed to capture essential information about research outputs, including titles, creators, publication year, and resource type, among others. This comprehensive metadata framework facilitates the accurate and consistent description of data, making it easier for researchers, institutions, and funders to manage and track the impact of their research outputs. By standardizing metadata across various disciplines and repositories, DataCite plays a pivotal role in enhancing the interoperability of research data, supporting open science initiatives, and promoting data citation and reuse.
+DataCite is an international organization that provides persistent identifiers (DOIs) 
+for research data and other research outputs. Their metadata handling process is crucial 
+for ensuring the discoverability, accessibility, and reusability of research outputs. 
+DataCite's metadata schema is designed to capture essential information about research 
+outputs, including titles, creators, publication year, and resource type, among others. 
+This comprehensive metadata framework facilitates the accurate and consistent description 
+of data, making it easier for researchers, institutions, and funders to manage and 
+track the impact of their research outputs. By standardizing metadata across various 
+disciplines and repositories, DataCite plays a pivotal role in enhancing the 
+interoperability of research data, supporting open science initiatives, and promoting 
+data citation and reuse.
+The function `extract_metadata` fetches required data with id `cult_emp_sex`. The fetched
+data includes metadata and  can be accessed using `attr()` function as below.
 
 
 ```{r}
@@ -17,53 +29,79 @@ DataCite is an international organization that provides persistent identifiers (
 devtools::load_all()
 # Fetch the dataset here using get_eurostat_sdmx function
 metadata <- extract_metadata(id = "cult_emp_sex")
-metadata
-```
 
-The function `get_eurostat_sdmx` fetches required data with id `cult_emp_sex`. The fetched data includes metadata and  can be accessed using `attr()` function as below.
+```
+The dataset package has `datacite()` function.
+The `datacite()` function creates a `bibentry` object with DataCite metadata.
+
 
 ```{r}
 library(dataset)
 datacite_object <- datacite(
 Title = metadata$Name_FR,
-Creator = metadata$AgencyID,
-Publisher = metadata$AgencyID,
-PublicationYear = metadata$UpdateDataTimestamp,
-Geolocation = metadata$IsFinal,
-Language = metadata$URN
+Creator = metadata$SenderID,
+Publisher = metadata$SenderID,
+PublicationYear = metadata$date_Prepared,
+Version = metadata$Version
+#Geolocation = metadata$IsFinal,
+#Language = metadata$
 )
+```
+
+The dataset package helps us retrieve the DataCite metadata of an existing dataset 
+object into bibentry, list, or dataset format.After assigning the output 
+`metadata` to the correct list names we print it out as in `Bibentry` as follows.
+
+```{r}
 print(datacite_object, "Bibtex")
 ```
+
+We can retrieve the Datacite metadata as a `list` as follows.
 
 ```{r}
 as_datacite(datacite_object, "list")
 ```
-metadata <- list(
-    Name_EN = name_en,
-    Name_DE = name_de,
-    Name_FR = name_fr,
-    DOI_URL = doi_url,
-    DataflowID = dataflow_id,
-    AgencyID = agencyID,
-    OldestPeriodTimestamp = oldest_period_timestamp,
-    LatestPeriodTimestamp = latest_period_timestamp,
-    UpdateDataTimestamp = update_data_timestamp,
-    URN = urn,
-    Version = version,
-    IsFinal = isFinal
-   
-  )
+
+# Working with Dublin core metadata
+
+
+The Dublin Core Metadata Element Set is a foundational standard in the world 
+of digital librarianship and information science, providing a simple yet 
+effective framework for describing a wide range of networked resources.
+It comprises 15 essential elements designed to facilitate the discovery 
+of electronic resources by allowing for the clear description and cataloging
+of digital and physical assets. These elements address various aspects of 
+a resource, including its title, creator, subject, description, and publisher,
+among others. The set's versatility and simplicity have led to its widespread 
+adoption across different domains, enabling interoperability among disparate 
+systems and enhancing the accessibility of digital resources across the internet.
+By standardizing the way information is described, the Dublin Core Metadata
+Element Set plays a crucial role in organizing, sharing, and managing digital 
+content in an increasingly complex digital ecosystem.
+
+The dataset package has a function `dublincore()` creates a bibentry   
 
 ```{r}
 library(dataset)
-as_datacite(metadata,"list")
-# Ensure you replace the agency and id with actual values or examples relevant to your context
+dublincore_object <- dublincore(
+  title = metadata$Name_EN,
+  creator = metadata$SenderID,
+  publisher = metadata$SenderID,
+  datasource = metadata$SourceInstitutions,
+  date = metadata$date_Prepared,
+  language = metadata$Name_EN,
+  #description = 
+)
+
+```
+
+A `bibentry` object is easily printed or exported into various formats, for example, `Bibtex.`
+
+```{r}
+print(dublincore_object, "Bibtex")
 ```
 
 ```{r}
-library(dataset)
-as_dublincore(metadata, "list")
-# Ensure you replace the agency and id with actual values or examples relevant to your context
+as_dublincore(dublincore_object, "list")
 ```
-
 
